@@ -14,13 +14,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        if(!isLoggedIn()) {
+            Intent goto_fb = new Intent(MainActivity.this, FacebookActivity.class);
+            MainActivity.this.startActivity(goto_fb);
+        }
+         setContentView(R.layout.activity_main);
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -30,8 +38,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Image to add", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Image to add", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+                Intent camera_intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivity(camera_intent);
             }
         });
 
@@ -90,16 +99,18 @@ public class MainActivity extends AppCompatActivity
             MainActivity.this.startActivity(goto_completed);
         } else if (id == R.id.nav_Verified) {
 
-            Intent goto_fb = new Intent(MainActivity.this,FacebookActivity.class);
-            MainActivity.this.startActivity(goto_fb);
         }
         else if (id == R.id.nav_Pending) {
-            Intent goto_completed = new Intent(MainActivity.this,Pending.class);
-            MainActivity.this.startActivity(goto_completed);
+            Intent goto_pending = new Intent(MainActivity.this,Pending.class);
+            MainActivity.this.startActivity(goto_pending);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
     }
 }

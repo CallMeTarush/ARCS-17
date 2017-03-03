@@ -15,16 +15,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-import com.facebook.login.widget.ProfilePictureView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
 
 public class FacebookActivity extends Activity {
 
@@ -48,8 +40,11 @@ public class FacebookActivity extends Activity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
-                textView.setText("Login success\n" + loginResult.getAccessToken().getUserId() +
-                "\n" + loginResult.getAccessToken().getToken());
+                Intent goto_main = new Intent(FacebookActivity.this,MainActivity.class);
+                FacebookActivity.this.startActivity(goto_main);
+                //textView.setText("Login success\n" + loginResult.getAccessToken().getUserId() +
+                //"\n" + loginResult.getAccessToken().getToken());
+
             }
 
             @Override
