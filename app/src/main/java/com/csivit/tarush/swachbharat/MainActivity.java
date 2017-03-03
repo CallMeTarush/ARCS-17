@@ -105,11 +105,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Cleaning) {
-            Intent goto_completed = new Intent(MainActivity.this,Completed.class);
+            Intent goto_completed = new Intent(MainActivity.this,Cleaning_job.class);
             MainActivity.this.startActivity(goto_completed);
         }
         else if (id == R.id.nav_Verification) {
-            Intent goto_pending = new Intent(MainActivity.this,Pending.class);
+            Intent goto_pending = new Intent(MainActivity.this,Verification_job.class);
             MainActivity.this.startActivity(goto_pending);
         }
 
