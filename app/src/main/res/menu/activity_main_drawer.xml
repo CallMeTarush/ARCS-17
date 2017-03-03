@@ -3,17 +3,13 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_Pending"
             android:icon="@drawable/ic_menu_camera"
-            android:title="Pending" />
+            android:title="Verification Jobs"
+            android:id="@+id/nav_Verification" />
         <item
-            android:id="@+id/nav_Verified"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Verified" />
-        <item
-            android:id="@+id/nav_Completed"
+            android:id="@+id/nav_Cleaning"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Completed" />
+            android:title="Cleaning Jobs" />
         </group>
 
 </menu>

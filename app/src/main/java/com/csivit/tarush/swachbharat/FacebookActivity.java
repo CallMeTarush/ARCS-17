@@ -20,6 +20,7 @@ import com.facebook.login.widget.LoginButton;
 
 public class FacebookActivity extends Activity {
 
+    public static boolean firstRun = true;
     LoginButton loginButton;
     TextView textView;
     CallbackManager callbackManager;
@@ -40,6 +41,7 @@ public class FacebookActivity extends Activity {
             @Override
             public void onSuccess(LoginResult loginResult) {
 
+                firstRun = false;
                 Intent goto_main = new Intent(FacebookActivity.this,MainActivity.class);
                 FacebookActivity.this.startActivity(goto_main);
                 //textView.setText("Login success\n" + loginResult.getAccessToken().getUserId() +
@@ -49,13 +51,12 @@ public class FacebookActivity extends Activity {
 
             @Override
             public void onCancel() {
-
                 textView.setText("Login Cancelled");
             }
 
             @Override
             public void onError(FacebookException error) {
-
+                textView.setText("Login Error");
             }
         });
     }

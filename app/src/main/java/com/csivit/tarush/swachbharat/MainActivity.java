@@ -14,22 +14,25 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import static com.csivit.tarush.swachbharat.FacebookActivity.firstRun;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
-        if(!isLoggedIn()) {
-            Intent goto_fb = new Intent(MainActivity.this, FacebookActivity.class);
-            MainActivity.this.startActivity(goto_fb);
-        }
-         setContentView(R.layout.activity_main);
 
+        if(firstRun) {
+            LoginManager.getInstance().logOut();
+            openFacebookLogin();
+        }
+        setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -38,9 +41,9 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Snackbar.make(view, "Image to add", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-                Intent camera_intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                startActivity(camera_intent);
+
+                Intent add_image = new Intent(MainActivity.this,add_Image.class);
+                MainActivity.this.startActivity(add_image);
             }
         });
 
@@ -53,6 +56,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+    public boolean isLoggedIn() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        return accessToken != null;
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -80,6 +88,10 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            LoginManager.getInstance().logOut();
+            firstRun = true;
+            Intent i2 = new Intent(MainActivity.this,MainActivity.class);
+            MainActivity.this.startActivity(i2);
             return true;
         }
 
@@ -92,15 +104,11 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_Completed) {
-            // Handle the camera action
-
+        if (id == R.id.nav_Cleaning) {
             Intent goto_completed = new Intent(MainActivity.this,Completed.class);
             MainActivity.this.startActivity(goto_completed);
-        } else if (id == R.id.nav_Verified) {
-
         }
-        else if (id == R.id.nav_Pending) {
+        else if (id == R.id.nav_Verification) {
             Intent goto_pending = new Intent(MainActivity.this,Pending.class);
             MainActivity.this.startActivity(goto_pending);
         }
@@ -109,8 +117,10 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public boolean isLoggedIn() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        return accessToken != null;
+
+    private void openFacebookLogin() {
+        Intent goto_fb = new Intent(MainActivity.this, FacebookActivity.class);
+        MainActivity.this.startActivity(goto_fb);
     }
 }
+
