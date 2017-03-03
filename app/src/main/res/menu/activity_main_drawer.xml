@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Pending"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Pending" />
+        <item
+            android:id="@+id/nav_Verified"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Verified" />
+        <item
+            android:id="@+id/nav_Completed"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Completed" />
+        </group>
+
+</menu>
